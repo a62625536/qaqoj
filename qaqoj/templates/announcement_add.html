@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_addannouncement{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <form class="col-md-10 col-md-offset-1" action="" method="POST">
+    	<label>title</label>
+        <input type="text" class="form-control" name="title" required="" autofocus="">
+        <label>content</label>
+        <textarea class="form-control" rows="20" name="content" required=""></textarea>
+        <br>
+        <center><button class="btn btn-lg btn-default " type="submit">提交</button></center>
+    </form>
+    <br>
+</div>
+{% endblock %}
+{% block home %}"active"{% endblock %}

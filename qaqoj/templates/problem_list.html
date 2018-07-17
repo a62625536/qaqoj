@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_problems{% endblock %}
+{% block body %}
+<div class="col-md-8 col-md-offset-2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-2">ID</th>
+                <th class="col-md-6">标题</th>
+                <th class="col-md-2">正确</th>
+                <th class="col-md-2">提交</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for problem in problems.object_list %}
+        {% if problem.visible or user.is_staff %}
+            <tr>
+                <td>{{problem.id}}
+                {% if user.is_staff %}
+                {% if problem.visible %}
+                    <span class="glyphicon glyphicon-star"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                {% endif %}
+                {% endif %}
+                {% if problem in myuser.ac_problems.all %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% endif %}
+                </td>
+                <td><a href="/problem/{{problem.id}}">{{problem.title}}</a></td>
+                <td>{{problem.ac_num}}</td>
+                <td>{{problem.sub_num}}</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if problems.has_previous %}
+                <li><a href="?page={{problems.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == problems.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if problems.has_next %}
+                <li><a href="?page={{problems.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% if user.is_staff %}
+        <div class="col-md-1 col-md-offset-11"><a type="submit" class="btn btn-lg btn-default" href="/addproblem">添加问题</a></div>
+    {% endif %}
+    <br>
+    <br>
+</div>
+{% endblock %}
+{% block problem %}"active"{% endblock %}

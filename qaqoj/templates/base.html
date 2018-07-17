@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
+        <link href={% static '/bootstrap/css/bootstrap.min.css' %} rel="stylesheet">
+        {% block script %}{% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">QAQ_OJ</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class={% block home %}{% endblock %}><a href="/">Home </a></li>
+                        <li class={% block problem %}{% endblock %}><a href="/problems">Problem</a></li>
+                        <li class={% block contest %}{% endblock %}><a href="/contests">Contest</a></li>
+                        <li class={% block status %}{% endblock %}><a href="/status">Status</a></li>
+                        <li class={% block hack %}{% endblock %}><a href="/hacks">Hack</a></li>
+                        <li class={% block discussion %}{% endblock %}><a href="/discussions">Discussion</a></li>
+                        <li class={% block rank %}{% endblock %}><a href="/rank">Rank</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {%if user.is_authenticated %}
+                            <li class={% block user %}{% endblock %}><a href="/user/{{user.id}}">{{user.username}}({% if user.is_superuser %}super admin{% elif user.is_staff %}admin{% else %}normal user{% endif %})</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        {% else %}
+                            <li class={% block login %}{% endblock %}><a href="/login">Login</a></li>
+                            <li class={% block register %}{% endblock %}><a href="/register">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        {% block body %}{% endblock %}
+        <br> 
+        <script {% static '/bootstrap/js/jquery.min.js' %}></script>
+        <script {% static '/bootstrap/js/bootstrap.min.js' %}></script>
+    </body>
+</div>
+</html>

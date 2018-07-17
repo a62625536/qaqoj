@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_Hack{% endblock %}
+{% block body %}
+<div class="col-md-8 col-md-offset-2">
+    {% if user.is_authenticated %}
+    <center>
+        <a type="submit" class="btn btn-lg btn-default" href="/hacks?hack_type=1">所有Hack</a>
+        <a type="submit" class="btn btn-lg btn-default" href="/hacks?hack_type=2">我的Hack</a>
+    </center>
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-1">HackID</th>
+                <th class="col-md-1">RunID</th>
+                <th class="col-md-2">问题</th>
+                <th class="col-md-2">Hacker</th>
+                <th class="col-md-2">Owner</th>
+                <th class="col-md-2">结果</th>
+                <th class="col-md-2">时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for hack in hacks.object_list %}
+            <tr>
+                {% if user.is_staff or hack.myuser == myuser %}
+                    <td><a href="/hack/{{hack.id}}">{{hack.id}}</a></td>
+                {% else %}
+                    <td>{{hack.id}}</td>
+                {% endif %}
+                {% if user.is_staff or hack.submission.myuser == myuser or hack.submission.problem in myuser.ac_problems.all and hack.submission.result == "答案正确" %}
+                    <td><a href="/submission/{{hack.submission.id}}">{{hack.submission.id}}</a></td>
+                {% else %}
+                    <td>{{hack.submission.id}}</td>
+                {% endif %}
+                <td><a href="/problem/{{hack.submission.problem.id}}">{{hack.submission.problem.id}}:{{hack.submission.problem.title}}</a></td>
+                <td><a href="/user/{{hack.myuser.user.id}}">{{hack.myuser.user.username}}</a></td>
+                <td><a href="/user/{{hack.submission.myuser.user.id}}">{{hack.submission.myuser.user.username}}</a></td>
+                {% if hack.result == "成功" %}
+                    <td class="alert-success">{{hack.result}}</td>
+                {% elif hack.result == "等待评测" or hack.result == "评测中" %}
+                    <td class="alert-info">{{hack.result}}</td>
+                {% elif hack.result == "系统错误" %}
+                    <td class="alert-warning">{{hack.result}}</td>
+                {% else %}
+                    <td class="alert-danger">{{hack.result}}</td>
+                {% endif %}
+                <td>{{hack.create_time|date:"Y-m-d H:m:s"}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if hacks.has_previous %}
+                <li><a href="?page={{hacks.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == hacks.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if hacks.has_next %}
+                <li><a href="?page={{hacks.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+{% block hack %}"active"{% endblock %}

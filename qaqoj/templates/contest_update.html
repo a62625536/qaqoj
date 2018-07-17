@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}{{contest.title}}{% endblock %}
+{% block body %}
+<form class="col-md-8 col-md-offset-2" action="" method="POST">
+    <center style="font-size:20px"><input type="checkbox" {%if contest.visible%}checked=""{%endif%} name="visible">visiable</center>
+    <center><button class= "btn btn-lg btn-default" type="submit">提交</button></center>
+</form>
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=2)" width="80%" color="#6f5499" size="10"/>
+<form class="col-md-8 col-md-offset-2" action="" method=post >
+    <label>title</label>
+    <input type="text" class="form-control" name="title" value="{{contest.title}}" request="">
+    <label>description</label>
+    <textarea class="form-control" rows="5" name="description" required="">{{contest.description}}</textarea>
+    <label>start_time</label>
+    <input type="datetime-local" class="form-control" name="start_time" value={{contest.start_time|date:"Y-m-d"}}T{{contest.start_time|date:"H:m:s"}} request="">
+    <label>end_time</label>
+    <input type="datetime-local" class="form-control" name="end_time" value={{contest.end_time|date:"Y-m-d"}}T{{contest.end_time|date:"H:m:s"}} request="">
+    <label>problem</label>
+    <select class="form-control" multiple="multiple" name="problem" size="10">
+        {% for problem in problems %}
+        <option value ="{{problem.id}}" {% if problem in contest.problems.all %} selected = "selected" {% endif %}>{{problem.id}}:{{problem.title}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <center><label>{{info}}</label></center>
+    <center><button class="btn btn-lg btn-default " type="submit">提交</button></center>
+    <br>
+    <br>
+</form>
+{% endblock %}
+{% block contest %}"active"{% endblock %}

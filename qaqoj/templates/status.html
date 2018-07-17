@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_status{% endblock %}
+{% block body %}
+<div class="col-md-8 col-md-offset-2">
+    {% if user.is_authenticated %}
+    <center>
+        <a type="submit" class="btn btn-lg btn-default" href="/status?status_type=1">所有提交</a>
+        <a type="submit" class="btn btn-lg btn-default" href="/status?status_type=2">我的提交</a>
+    </center>
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-1">RunID</th>
+                <th class="col-md-2">用户</th>
+                <th class="col-md-2">问题</th>
+                <th class="col-md-2">结果</th>
+                <th class="col-md-1">语言</th>
+                <th class="col-md-1">内存(kB)</th>
+                <th class="col-md-1">时间(ms)</th>
+                <th class="col-md-2">提交时间</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for submission in submissions.object_list %}
+            <tr>
+                {% if user.is_staff or submission.myuser == myuser or submission.problem in myuser.ac_problems.all and submission.result == "答案正确" %}
+                    <td><a href="/submission/{{submission.id}}">{{submission.id}}</a></td>
+                {% else %}
+                    <td>{{submission.id}}</td>
+                {% endif %}
+                <td><a href="/user/{{submission.myuser.user.id}}">{{submission.myuser.user.username}}</a></td>
+                <td><a href="/problem/{{submission.problem_id}}">{{submission.problem_id}}:{{submission.problem.title}}</a></td>
+                {% if submission.result == "答案正确" %}
+                    <td class="alert-success">{{submission.result}}</td>
+                {% elif submission.result == "等待评测" or submission.result == "评测中" %}
+                    <td class="alert-info">{{submission.result}}</td>
+                {% elif submission.result == "系统错误" %}
+                    <td class="alert-warning">{{submission.result}}</td>
+                {% else %}
+                    <td class="alert-danger">{{submission.result}}</td>
+                {% endif %}
+                <td>{{submission.language}}</td>
+                <td>{{submission.memory}}</td>
+                <td>{{submission.time}}</td>
+                <td>{{submission.create_time|date:"Y-m-d H:m:s"}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if submissions.has_previous %}
+                <li><a href="?page={{submissions.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == submissions.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if submissions.has_next %}
+                <li><a href="?page={{submissions.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <br>
+    <br>
+</div>
+{% endblock %}
+{% block status %}"active"{% endblock %}

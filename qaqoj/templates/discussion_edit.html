@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_discussion{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <form class="col-md-8 col-md-offset-2" action="" method="POST">
+    	<label>content</label>
+        <textarea class="form-control" rows="10" name="content" required="">{{dis.content}}</textarea>
+	    <center style="font-size:20px"><input type="checkbox" {%if dis.visible%}checked=""{%endif%} name="visible">visiable</center>
+	    <center><button class= "btn btn-lg btn-default" type="submit">submit</button></center>
+    </form>
+</div>
+{% endblock %}
+{% block discussion %}"active"{% endblock %}

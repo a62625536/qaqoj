@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ-addproblem{% endblock %}
+{% block body %}
+<form class="col-md-8 col-md-offset-2" action="" method=post >
+    <label >title</label>
+      <input type="text" class="form-control" name="title">
+        <label >time(second)</label>
+        <select class="form-control" name="time_limit">
+            <option>1</option>
+            <option>3</option>
+            <option>5</option>
+            <option>10</option>
+        </select>
+        <label >memory(MB)</label>
+        <select class="form-control" name="memory_limit">
+            <option>128</option>
+            <option>256</option>
+            <option>512</option>
+        </select>
+	    <label>description</label>
+        <textarea class="form-control" rows="5" name="description" required="" autofocus=""></textarea>
+        <label>input</label>
+        <textarea class="form-control" rows="2" name="input_description" required=""></textarea>
+        <label>output</label>
+        <textarea class="form-control" rows="2" name="output_description" required=""></textarea>
+        <label>sample input</label>
+        <textarea class="form-control" rows="4" name="sample_input" required=""></textarea>
+        <label>sample output</label>
+        <textarea class="form-control" rows="4" name="sample_output" required=""></textarea>
+        <label>hint</label>
+        <textarea class="form-control" rows="2" name="hint"></textarea>
+         <br>
+          <center><button class="btn btn-lg btn-default " type="submit">提交</button></center>
+         <br>
+        <br>  
+        <br>
+        <br>  
+</form>
+{% endblock %}
+{%block problem%}
+"active"
+{%endblock%}

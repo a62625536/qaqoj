@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}{{problem.id}}:{{problem.title}}:stand.cpp{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <center>
+        <div class="center-info ">
+            <h1>{{problem.id}}:{{problem.title}}:stand.cpp</h1>
+        </div>
+    </center>
+    <br>
+    <div class="p" style="width: 90%;margin-left: auto;margin-right: auto;">
+        <textarea type="text" readonly="readonly" rows="30" class="form-control" > {{text}} </textarea>
+    </div>
+    <br>
+</div>
+{% endblock %}
+{% block problem %}"active"{% endblock %}

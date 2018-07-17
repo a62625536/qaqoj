@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_contests{% endblock %}
+{% block body %}
+<div class="col-md-8 col-md-offset-2">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-2">ID</th>
+                <th class="col-md-6">标题</th>
+                <th class="col-md-2">开始</th>
+                <th class="col-md-2">结束</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contests_and_joined in contests_and_joineds %}
+            <tr>
+            {% if contests_and_joined.contest.visible or user.is_staff%}
+                <td>{{contests_and_joined.contest.id }}
+                {% if user.is_staff %}
+                {% if contests_and_joined.contest.visible %}
+                    <span class="glyphicon glyphicon-star"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                {% endif %}
+                {% endif %}
+                {% if contests_and_joined.contest.start_time > now %}
+                    <span class="glyphicon glyphicon-time"></span>
+                {% elif contests_and_joined.contest.start_time < now and now < contests_and_joined.contest.end_time %}
+                    <span class="glyphicon glyphicon-plane"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-ok-circle"></span>
+                {% endif %}
+                {% if contests_and_joined.joined%}
+                    <span class="glyphicon glyphicon-flag"></span>
+                {% endif %}
+                </td>
+                <td><a href="/contest/{{contests_and_joined.contest.id}}">{{contests_and_joined.contest.title}}</a></td>
+                <td>{{contests_and_joined.contest.start_time|date:"Y-m-d H:m:s"}}</td>
+                <td>{{contests_and_joined.contest.end_time|date:"Y-m-d H:m:s"}}</td>
+            {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if contests.has_previous %}
+                <li><a href="?page={{contests.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == contests.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if contests.has_next %}
+                <li><a href="?page={{contests.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+
+    </nav>
+    {% if user.is_staff %}
+        <div class="col-md-1 col-md-offset-11"><a type="submit" class="btn btn-lg btn-default" href="/addcontest">添加比赛</a></div>
+    {% endif %}
+    <br>
+    <br>
+</div>
+{% endblock %}
+{%block contest %}"active"{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "contest_base.html" %}
+{% block contest_body %}
+<div class="p well" style=";margin-left: auto;margin-right: auto;">
+    <h3>{{contest.description}}</h3>
+</div>
+<center>
+    <form  action="" method="POST">
+    {% if not ok %}
+        <button class= "btn btn-lg btn-default" type="submit">报名</button>
+    {% endif %}
+    {% if user.is_superuser or contest.create_user == user %}
+        <a type="submit" class="btn btn-lg btn-default" href="/contest/{{contest.id}}/update">更新</a>
+    {% endif %}
+    </form>
+    <br>
+</center>
+{% endblock %}
+{% block contest_description %}"active"{% endblock %}

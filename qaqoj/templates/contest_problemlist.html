@@ -1,0 +1,41 @@
+{% extends "contest_base.html" %}
+{% block contest_body %}
+{% if info %}
+<div class="p well" style=";margin-left: auto;margin-right: auto;">
+    <h3>{{info}}</h3>
+</div>
+{% else %}
+<div class="col-md-10 col-md-offset-1">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-8">标题</th>
+                <th class="col-md-2">正确</th>
+                <th class="col-md-2">提交</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for problem_and_num in problems_and_nums %}
+            <tr>
+                <td>
+                {% if running %}
+                    <a href="/contest/{{contest.id}}/problem/{{problem_and_num.problem.id}}">{{problem_and_num.problem.title}}
+                {% else %}
+                    {{problem_and_num.problem.title}}
+                {% endif %}
+                {% if problem_and_num.problem in contestuser.ac_problems.all %}
+                    <span class="glyphicon glyphicon-ok"></span>
+                {% endif %}
+                </td>
+                    <td>{{problem_and_num.ac_num}}</td>
+                    <td>{{problem_and_num.sub_num}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+</div>
+{% endif %}
+{% endblock %}
+{% block contest_problem %}"active"{% endblock %}

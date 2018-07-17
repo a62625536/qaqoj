@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_login{% endblock %}
+{% block body %}
+<div class="container col-md-3 col-md-offset-4">
+    <form class="form-signin" method="post">
+        <h1 class="form-signin-heading">login</h1>
+        <br>
+        <div class="form-group">
+            <label >UserName</label>
+            <input type="text" name="username" class="form-control" placeholder="username" required="" autofocus="">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">PassWord</label>
+            <input type="password" name="password" class="form-control" placeholder="password" required="">
+        </div>
+        <label>{{info}}</label>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">submit</button>
+    </form>
+</div>
+{% endblock %}
+{% block login %}"active"{% endblock %}

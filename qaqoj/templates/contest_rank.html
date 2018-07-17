@@ -1,0 +1,46 @@
+{% extends "contest_base.html" %}
+{% block contest_body %}
+<div class="col-md-10 col-md-offset-1">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="col-md-6">用户</th>
+                <th class="col-md-2">正确</th>
+                <th class="col-md-2">提交</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contestuser in contestusers.object_list %}
+            <tr>
+                <td><a href="/user/{{contestuser.user_id}}">{{contestuser.user.username}}</a></td>
+                <td>{{contestuser.ac_num}}</td>
+                <td>{{contestuser.sub_num}}</td>
+                <td>{{contestuser.hack_num}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if contestusers.has_previous %}
+                <li><a href="?page={{contestusers.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == contestusers.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if contestusers.has_next %}
+                <li><a href="?page={{contestusers.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+{% block contest_rank %}"active"{% endblock %}

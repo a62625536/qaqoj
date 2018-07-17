@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_updateproblem{% endblock %}
+{% block body %}
+<form class="col-md-8 col-md-offset-2" action="" method="POST">
+    <center style="font-size:20px"><input type="checkbox" {% if problem.visible %}checked=""{% endif %} name="visible">visiable</center>
+    <center><button class= "btn btn-lg btn-default" type="submit">修改</button></center>
+</form>
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=2)" width="80%" color="#6f5499" size="10"/>
+<form class="col-md-8 col-md-offset-2" method="POST" enctype="multipart/form-data">
+{% if not checkcode %}
+    <label>该问题没有检查程序，请添加</label><br>
+    <center><input type="file" name="checkcode" required=""></center>
+    <center><button class= "btn btn-lg btn-default" type="submit">上传</button></center>
+{% else %}
+    <label>该问题已经有检查程序，可重新上传</label>
+    <center><a href="/problem/{{problem.id}}/check" style="font-size:32px">check.cpp</a></center>
+    <center><input type="file" name="checkcode" required=""></center>
+    <center><button class= "btn btn-lg btn-default" type="submit">上传</button></center>
+{% endif %}
+</form>
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=2)" width="80%" color="#6f5499" size="10"/>
+<form class="col-md-8 col-md-offset-2" method="POST" enctype="multipart/form-data">
+{% if not standcode %}
+    <label>该问题没有标准程序，请添加</label><br>
+    <center><input type="file" name="standcode" required=""></center>
+    <center><button class= "btn btn-lg btn-default" type="submit">上传</button></center>
+{% else %}
+    <label>该问题已经有标准程序，可重新上传</label>
+    <center><a href="/problem/{{problem.id}}/stand" style="font-size:32px">stand.cpp</a></center>
+    <center><input type="file" name="standcode" required=""></center>
+    <center><button class= "btn btn-lg btn-default" type="submit">上传</button></center>
+{% endif %}
+</form>
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=2)" width="80%" color="#6f5499" size="10"/>
+<form class="col-md-8 col-md-offset-2" method="POST" enctype="multipart/form-data">
+    <label>该问题有{{cases|length}}组数据，请添加</label><br>
+    {% for case in cases %}
+        <center><a href="/problem/{{problem.id}}/case/{{case}}" style="font-size:32px">case:{{case}}</a></center>
+    {% endfor %}
+    <lebel>输入数据</lebel>
+    <center><input type="file" name="input" required=""></center>
+    <lebel>输出数据</lebel>
+    <center><input type="file" name="output" required=""></center>
+    <center><button class= "btn btn-lg btn-default" type="submit">上传</button></center>
+</form>
+<hr style="filter: alpha(opacity=100,finishopacity=0,style=2)" width="80%" color="#6f5499" size="10"/>
+<form class="col-md-8 col-md-offset-2" action="" method="POST">
+    <label>title</label>
+      <input type="text" class="form-control" name="title" value="{{problem.title}}">
+        <label>time(second)</label>
+        <select class="form-control" name="time_limit" >
+            <option {% if problem.time_limit == 1 %} selected="selected" {% endif %}>1</option>
+            <option {% if problem.time_limit == 3 %} selected="selected" {% endif %}>3</option>
+            <option {% if problem.time_limit == 5 %} selected="selected" {% endif %}>5</option>
+            <option {% if problem.time_limit == 10 %} selected="selected" {% endif %}>10</option>
+        </select>
+        <label>memory(MB)</label>
+        <select class="form-control" name="memory_limit"">
+            <option {% if problem.memory_limit == 128 %} selected="selected" {% endif %}>128</option>
+            <option {% if problem.memory_limit == 256 %} selected="selected" {% endif %}>256</option>
+            <option {% if problem.memory_limit == 512 %} selected="selected" {% endif %}>512</option>
+        </select>
+	    <label>describe</label>
+        <textarea class="form-control" rows="5" name="description" required="" >{{problem.description}}</textarea>
+        <label>input</label>
+        <textarea class="form-control" rows="2" name="input_description" required="" >{{problem.input_description}}</textarea>
+        <label>output</label>
+        <textarea class="form-control" rows="2" name="output_description" required="" >{{problem.output_description}}</textarea>
+        <label>sample input</label>
+        <textarea class="form-control" rows="4" name="sample_input" required="" >{{problem.sample_input}}</textarea>
+        <label>sample output</label>
+        <textarea class="form-control" rows="4" name="sample_output" required="">{{problem.sample_output}}</textarea>
+        <label>hint</label>
+        <textarea class="form-control" rows="2" name="hint">{{problem.hint}}</textarea>
+        <br>
+            <center><button class="btn btn-lg btn-default" type="submit">提交</button></center>
+        <br>  
+        <br>
+        <br>  
+</form>
+{% endblock %}
+{%block problem%}
+"active"
+{%endblock%}

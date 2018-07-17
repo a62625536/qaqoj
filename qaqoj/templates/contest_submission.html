@@ -1,0 +1,25 @@
+{% extends "contest_base.html" %}
+{% block contest_body %}
+<div class="col-md-10 col-md-offset-1">
+    <center>
+        <div class="center-info ">
+            <h1>{{contestsubmission.problem.title}}</h1>
+        </div>
+        <span>author: </span>{{contestsubmission.contestuser.user.username}}<br>
+        <span>time: </span>{{contestsubmission.create_time|date:"Y-m-d H:m:s"}}<br>
+        <span>language: </span>{{contestsubmission.language}}<br>
+        <span>result: </span>{{contestsubmission.result}}<br>
+        {% if contestsubmission.result != "Waiting" %}
+            <span>run_time: </span>{{contestsubmission.time}}<br>
+            <span>run_memory: </span>{{contestsubmission.memory}}<br>
+        {% endif %}
+    </center>
+    <br>
+    {{contestsubmission.info}}
+    <div class="p" style="margin-left: auto;margin-right: auto;">
+        <textarea type="text" readonly="readonly" rows="20" class="form-control">{{contestsubmission.code}}</textarea>
+    </div>
+    <br>
+</div>
+{% endblock %}
+{% block contest_status %}"active"{% endblock %}

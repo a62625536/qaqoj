@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_home{% endblock %}
+{% block body %}
+<div class="red-text text-center">
+    <p style="font-size: 50px">Welcome to QAQ_OJ!</p>
+</div>
+<div class="col-md-8 col-md-offset-2">
+    <table class="table table-striped">
+        <thead>
+            <tr><th>公告</th></tr>
+        </thead>
+        <tbody>
+            {% for announcement in announcements.object_list %}
+            {% if announcement.visible or user.is_superuser %}
+            <tr>
+                <td class="col-md-3">
+                <a href="/announcement/{{announcement.id}}">{{announcement.title|truncatechars:30}}</a>
+                {% if user.is_superuser %}
+                {% if announcement.visible %}
+                    <span class="glyphicon glyphicon-star"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                {% endif %}
+                {% endif %}
+                </td>
+                <td class="col-md-7">{{announcement.content|truncatechars:40}}</td>
+                <td class="col-md-2">{{announcement.create_time|date:"Y-m-d H:m:s"}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if announcements.has_previous %}
+                <li><a href="?page={{announcements.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == announcements.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if announcements.has_next %}
+                <li><a href="?page={{announcements.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% if user.is_superuser %}
+    <div class="col-md-1 col-md-offset-11"><a type="submit" class="btn btn-lg btn-default" href="/addannouncement">添加公告</a></div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block home %}"active"{% endblock %}

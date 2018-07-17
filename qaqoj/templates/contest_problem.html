@@ -1,0 +1,33 @@
+{% extends "contest_base.html" %}
+{% block contest_body %}
+<div class="col-md-12">
+    <center>
+        <div class="center-info ">
+            <h1>{{problem.title}}</h1>
+            <span class="green">Time Limit:</span>{{problem.time_limit}} Sec&nbsp;&nbsp;
+            <span class="green">Memory Limit:</span>{{problem.memory_limit}} MB<br>
+            <span class="green">Solved:</span>{{ac_num}}&nbsp;&nbsp;
+            <span class="green">Submit:</span>{{sub_num}}<br>
+    </center>
+        <div class="p well well-lg" style="width: 90%;margin-left: auto;margin-right: auto;">
+            <h2>Description</h2>
+            <div class="content"><p><span>{{problem.description}}</span></p></div>
+            <h2>Input</h2>
+            <div class="content"><p><span>{{problem.input_description}}</span></p></div>
+            <h2>Output</h2>
+            <div class="content"><p><span>{{problem.output_description}}</span></p></div>
+            <h2>Sample Input</h2>
+            <div class="content"><span class="sampledata pre">{{problem.sample_input}}</span></div>
+            <h2>Sample Output</h2>
+            <div class="content"><span class="sampledata pre">{{problem.sample_output}}</span></div>
+            <h2>hint</h2>
+            <div class="content"><p>{{problem.hint}}</p></div>
+        </div>
+    <center>
+        <a type="submit" class="btn btn-default" href="/contest/{{contest.id}}/submit?problem_id={{problem.id}}">提交</a>
+        <br>
+        <br>
+    </center>
+</div>
+{% endblock %}
+{% block contest_problem %}"active"{% endblock %}

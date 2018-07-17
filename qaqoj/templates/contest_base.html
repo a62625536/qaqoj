@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{contest.title}}{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <center>
+        <div class="center-info ">
+            <h1>{{contest.title}}</h1>
+            <span class="green">start:{{contest.start_time|date:"Y-m-d H:m:s"}}</span><br>
+            <span class="green">end:{{contest.end_time|date:"Y-m-d H:m:s"}}</span><br>
+        </div>
+    </center>
+    <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" class={%block contest_description%}{%endblock%}><a href="/contest/{{contest.id}}">Description</a></li>
+        <li role="presentation" class={%block contest_problem%}{%endblock%}><a href="/contest/{{contest.id}}/problems">Problem</a></li>
+        <li role="presentation" class={%block contest_status%}{%endblock%}><a href="/contest/{{contest.id}}/status">Status</a></li>
+        <li role="presentation" class={%block contest_rank%}{%endblock%}><a href="/contest/{{contest.id}}/rank">Rank</a></li>
+    </ul>
+    {% block contest_body %}{% endblock %}
+</div>
+{% endblock %}{% block contest %}"active"{% endblock %}

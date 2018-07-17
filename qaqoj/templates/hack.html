@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}hack: {{hack.id}}{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <center>
+        <div class="center-info ">
+            <h1>{{hack.submission.problem.id}}: {{hack.submission.problem.title}}</h1>
+        </div>
+        <span>RunID: </span>{{hack.submission.id}}<br>
+        <span>hacker: </span>{{hack.myuser.user.username}}<br>
+        <span>owner: </span>{{hack.submission.myuser.user.username}}<br>
+        <span>result: </span>{{hack.result}}<br>
+        <span>time : </span>{{hack.create_time|date:"Y-m-d H:m:s"}}<br>
+    </center>
+    <label>代码</label>
+    <div class="p" style="margin-left: auto;margin-right: auto;">
+        <textarea type="text" readonly="readonly" rows="20" class="form-control">{{hack.submission.code}}</textarea>
+    </div>
+    <br>
+    <label>Hack数据</label>
+    <div class="p" style="margin-left: auto;margin-right: auto;">
+        <textarea type="text" readonly="readonly" rows="20" class="form-control">{{hack.input_data}}</textarea>
+    </div>
+    <br>
+    <br>
+</div>
+{% endblock %}
+{% block hack %}"active"{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}submission: {{submission.id}}{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <center>
+        <div class="center-info ">
+            <h1>{{submission.problem.id}}: {{submission.problem.title}}</h1>
+        </div>
+        <span>author: </span>{{submission.myuser.user.username}}<br>
+        <span>time: </span>{{submission.create_time|date:"Y-m-d H:m:s"}}<br>
+        <span>language: </span>{{submission.language}}<br>
+        <span>result: </span>{{submission.result}}<br>
+        {% if submission.result != "等待评测" %}
+            <span>run_time: </span>{{submission.time}}<br>
+            <span>run_memory: </span>{{submission.memory}}<br>
+        {% endif %}
+    </center>
+    <br>
+    <label>编译信息</label>
+    <div class="p" style="margin-left: auto;margin-right: auto;">
+        <textarea type="text" readonly="readonly" rows="5" class="form-control">{{submission.info}}</textarea>
+    </div>
+    <br>
+    <label>代码</label>
+    <div class="p" style="margin-left: auto;margin-right: auto;">
+        <textarea type="text" readonly="readonly" rows="20" class="form-control">{{submission.code}}</textarea>
+    </div>
+    <br>
+    {% if submission.myuser != myuser and submission.problem in myuser.ac_problems.all and submission.result == "答案正确" %}
+        <center><a type="submit" class="btn btn-lg btn-default" href="/addhack?submission_id={{submission.id}}">Hack</a></center>
+    {% endif %}
+    <br>
+    <br>
+</div>
+{% endblock %}
+{% block problem %}"active"{% endblock %}

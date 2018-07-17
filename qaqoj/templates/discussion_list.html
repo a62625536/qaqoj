@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_discussion{% endblock %}
+{% block body %}
+<center>
+    <a type="submit" class="btn btn-lg btn-default" href="/adddiscussion">留言</a>
+    <br><br>
+</center>
+<div class="col-md-10 col-md-offset-1">
+<table class="table table-striped">
+{% for dis in discussion.object_list %}
+{% if user.is_superuser or dis.visible%}
+{% if dis.user.is_superuser%}
+    <div class="alert alert-success">
+    {% if user.is_superuser %}
+        <center>
+            <div class="center-info ">
+                <a href="/discussion/{{dis.id}}">
+                {% if dis.visible %}
+                    <span class="glyphicon glyphicon-star"></span>
+                {% else %}
+                    <span class="glyphicon glyphicon-star-empty"></span>
+                {% endif %}
+                </a>
+            </div>
+        </center>
+        {% endif %}
+        <h2 >{{dis.content}}</h2>
+        <center>
+            <div class="center-info ">
+                <span class="green">author:{{dis.user}}</span>
+                {{announcement.create_time|date:"Y-m-d H:m:s"}}<br>
+                <span class="green">time:{{dis.create_time|date:"Y-m-d H:m:s"}} </span>
+                {{announcement.last_update_time|date:"Y-m-d H:m:s"}}
+            </div>
+        </center>
+    </div>
+{% elif dis.user.is_staff %}
+    <div class="alert alert-info">
+    {% if user.is_superuser %}
+        <center>
+            <div class="center-info ">
+                 <a href="/discussion/{{dis.id}}">
+                {% if dis.visible %}<span class="glyphicon glyphicon-star"></span>
+                {% else %}<span class="glyphicon glyphicon-star-empty"></span>
+                {% endif %}
+                </a>
+            </div>
+        </center>
+        {% endif %}
+        <h2 >{{dis.content}}</h2>
+        <center>
+            <div class="center-info ">
+                <span class="green">author:{{dis.user}}</span>
+                {{announcement.create_time|date:"Y-m-d H:m:s"}}<br>
+                <span class="green">time:{{dis.create_time|date:"Y-m-d H:m:s"}} </span>
+                {{announcement.last_update_time|date:"Y-m-d H:m:s"}}
+            </div>
+        </center>
+    </div>
+{% else %}
+    <div class="well">
+    {% if user.is_superuser %}
+        <center>
+            <div class="center-info ">
+                 <a href="/discussion/{{dis.id}}">
+                {% if dis.visible %}<span class="glyphicon glyphicon-star"></span>
+                {% else %}<span class="glyphicon glyphicon-star-empty"></span>
+                {% endif %}
+                </a>
+            </div>
+        </center>
+        {% endif %}
+        <h2 >{{dis.content}}</h2>
+        <center>
+            <div class="center-info ">
+                <span class="green">author:{{dis.user}}</span>
+                {{announcement.create_time|date:"Y-m-d H:m:s"}}<br>
+                <span class="green">time:{{dis.create_time|date:"Y-m-d H:m:s"}} </span>
+                {{announcement.last_update_time|date:"Y-m-d H:m:s"}}
+            </div>
+        </center>
+    </div>
+    {% endif %}
+{% endif %}
+{% endfor %}
+</table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if discussion.has_previous %}
+                <li><a href="?page={{discussion.previous_page_number}}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+            {% endif %}
+            {% for page_num in page_range %}
+                {% if page_num == discussion.number %}
+                    <li class="active"><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% else %}
+                    <li><a href="?page={{page_num}}">{{page_num}}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if discussion.has_next %}
+                <li><a href="?page={{discussion.next_page_number}}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% else %}
+                <li class="disabled"><a aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}
+{% block discussion %}"active"{% endblock %}

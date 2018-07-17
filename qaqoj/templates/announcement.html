@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{announcement.title}}{% endblock %}
+{% block body %}
+<div class="col-md-10 col-md-offset-1">
+    <center>
+        <div class="center-info ">
+            <h1>{{announcement.title}}</h1>
+            <span class="green">Time: </span>{{announcement.create_time|date:"Y-m-d H:m:s"}}<br>
+        </div>
+    </center>
+
+    <br>
+    <div class="p" style="width: 90%;margin-left: auto;margin-right: auto;">
+        <textarea  style="font-family:Microsoft YaHei,微软雅黑,MicrosoftJhengHei,华文细黑,STHeiti,MingLiu;font-size:25px; type="text" readonly="readonly" rows="13" class="form-control" > {{announcement.content}} </textarea>
+    </div>
+    <br>
+    {% if user.is_superuser %}
+        <center>
+        {% if user.is_staff %}
+            <a type="submit" class="btn btn-lg btn-default" href="/announcement/{{announcement.id}}/update">更新</a>
+        {% endif %}
+        </center>
+    {% endif %}
+    <br>
+</div>
+{% endblock %}
+{% block home %}"active"{% endblock %}

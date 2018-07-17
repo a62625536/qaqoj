@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{user.username}}{% endblock %}
+{% block body %}
+<div class="container col-md-4 col-md-offset-4">
+    <h1 class="form-signin-heading">{{myuser.user.username}}</h1>
+    <h3 class="form-signin-heading">last_login:{{myuser.user.last_login|date:"Y-m-d H:m:s"}}</h3>
+    <h3 class="form-signin-heading">date_joined:{{myuser.user.date_joined|date:"Y-m-d H:m:s"}}</h3>
+    <h3 class="form-signin-heading">ac_num:{{myuser.ac_num}}</h3>
+    <h3 class="form-signin-heading">sub_num:{{myuser.sub_num}}</h3>
+    <h3 class="form-signin-heading">hack_num:{{myuser.hack_num}}</h3>
+    {% if userok %}
+	<h3 class="form-signin-heading">email:{{myuser.user.email}}</h3>
+	<br>
+        <form class="form-login" method="post">
+             <div class="form-group">
+                <label >Email</label>
+                <input type="email" name="email" class="form-control" placeholder="email" value="{{pageuser.email}}" required="" autofocus="">
+            </div>
+            {{errors.email}}{{info1}}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form>
+        <br>
+        <br>
+        <form class="form-login" method="post">
+            <div class="form-group">
+                <label >OldPassWord</label>
+                <input type="password" name="pw" class="form-control" placeholder="password" required="">
+            </div>
+            <div class="form-group">
+                <label >PassWord</label>
+                <input type="password" name="pw1" class="form-control" placeholder="password" required="">
+            </div>
+            {{errors.pw1}}
+            <div class="form-group">
+                <label >PassWord Again</label>
+                <input type="password" name="pw2" class="form-control" placeholder="password again" required="">
+            <br>
+            {{errors.pw2}}
+            {{info2}}
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}
+{% block user %}{% if userok %}"active"{% endif %}{% endblock %}

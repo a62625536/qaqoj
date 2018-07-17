@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}QAQ_OJ_addcontest{% endblock %}
+{% block body %}
+<form class="col-md-8 col-md-offset-2" action="" method=post >
+    <label >title</label>
+    <input type="text" class="form-control" name="title" request="">
+    <label >description</label>
+    <textarea class="form-control" rows="5" name="description" required="" autofocus=""></textarea>
+    <label >start_time</label>
+    <input type="datetime-local" class="form-control" name="start_time" request="">
+    <label >end_time</label>
+    <input type="datetime-local" class="form-control" name="end_time" request="">
+    <label >problem</label>
+    <select class="form-control" multiple="multiple" name="problem" size="10">
+        {% for problem in problems %}
+            <option value ="{{problem.id}}">{{problem.id}}:{{problem.title}}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <center><label>{{info}}</label></center>
+    <center><button class="btn btn-lg btn-default " type="submit">提交</button></center>
+    <br>
+</form>
+{% endblock %}
+{% block contest %}"active"{% endblock %}
